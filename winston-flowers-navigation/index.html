@@ -68,6 +68,11 @@ nav.dnav>ul>li:hover .dd,nav.dnav>ul>li.open .dd,nav.dnav>ul>li:focus-within .dd
 .col li .tag{margin-left:6px}
 .col a.feature{font-family:var(--serif);font-size:19px;font-weight:600}
 .col .note{font-size:12px;color:var(--mute);margin-top:12px;max-width:220px;line-height:1.45}
+.col.imgtile{min-width:0}
+.col.imgtile img{display:block;width:230px;height:190px;object-fit:cover;border-radius:2px}
+.col.imgtile a{text-decoration:none}
+.col.imgtile .cap{display:block;margin-top:10px;font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink)}
+.col.imgtile .tag{margin-top:6px}
 .col.imgtile .ph{width:210px;height:170px;background:repeating-linear-gradient(45deg,#f1ece5,#f1ece5 10px,#ebe5dc 10px,#ebe5dc 20px);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9b948a;text-align:center}
 .col.promo{background:var(--cream);padding:18px 20px;border-radius:4px;max-width:250px}
 .hero{height:340px;background:linear-gradient(180deg,#f5f1eb,#ebe4da);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mute)}
@@ -176,8 +181,9 @@ footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44
       <h3>What changes</h3>
       <ol>
         <li><b>First slot rotates with the calendar.</b> The seasonal collection by default, swapped for the major holiday (Thanksgiving, Holiday, Valentine's Day, Mother's Day) during its selling window.</li>
-        <li><b>New Occasions menu</b> links the occasions people actually search for: Birthday, Love &amp; Romance, Thank You, New Baby, Get Well and Sympathy, which moves out of Flowers.</li>
-        <li><b>New Locations menu</b> puts every shop, design studio and Greater Boston delivery town in the main navigation, with Same-Day Delivery featured.</li>
+        <li><b>New Occasions menu</b> links all eight new occasion pages, plus Sympathy, which moves out of Flowers.</li>
+        <li><b>New Locations menu</b> puts every shop, design studio and Greater Boston delivery town in the main navigation, and its image tile promotes Same-Day Delivery.</li>
+        <li><b>Every image tile becomes a link.</b> Each dropdown keeps an image tile, as it does today, now with a short caption that links to a page. Occasions and Locations get new tiles made from Winston's own photography.</li>
         <li><b>Home and Office merge</b> into one Home &amp; Office menu, so the bar stays at nine items.</li>
         <li><b>Fewer, stronger links.</b> Duplicates come out (Garden Design appeared in three menus, and Events links were repeated under Home and Office), and low-traffic pages such as Blog, Careers and Donations move to the footer. Outside the new Locations menu, the dropdowns carry fewer links than they do today.</li>
         <li><b>Footer gets simpler:</b> the 17 location links become four shops and two studios with addresses. Events, Home and Office merge into one Services column, and a Customer Care column is added.</li>
@@ -221,51 +227,52 @@ const SEASONS=[
  {k:'latesummer',when:'Aug to mid Sep',           label:'Late Summer Collection',u:'/late-summer-collection/cat9080066'},
 ];
 // the collection shown inside Flowers / footer follows the collection behind the holiday
+const TILES={"flowers": "https://assets.eflorist.com//site/32084100/Categories/Late%20Summer%202026/09-Flowers-DropDownMenu-Tile.jpg", "gourmet": "https://assets.eflorist.com//site/32084100/Categories/Mothers%20Day%202026/Gourmet-DropDown.jpg", "plants": "https://assets.eflorist.com//site/32084100/Categories/Mothers%20Day%202026/Plants-Dropdown.jpg", "events": "https://assets.eflorist.com//site/32084100/Top%20Nav/Top-Nav-Weddings-Final.jpg", "home": "https://assets.eflorist.com//site/32084100/Top%20Nav/Top-Nav-Home-4-Final.jpg", "office": "https://assets.eflorist.com//site/32084100/Categories/Winter%202023/08-Corporate-DropDownMenu-Tile%20copy.jpg", "why": "https://assets.eflorist.com//site/32084100/Categories/Winter%202023/08-WhyWinston-DropDownMenu-Tile%20copy.jpg", "occ": "https://assets.eflorist.com//site/32084100/Homepage/03-HomePage-Color-Pink.jpg", "loc": "https://assets.eflorist.com//site/32084100/Locations/Boston-Design-Studio/m7190150-Boston_2.jpg"};
 const SEASON_COLLECTION={thanks:'autumn',holiday:'winter',vday:'winter',mom:'spring'};
 
 /* ---------- navigation data ---------- */
 /* s: n=new, m=moved/merged, r=rotates, x=removed (current view only) */
 function proposedNav(season){
   const sc=SEASONS.find(s=>s.k===(SEASON_COLLECTION[season.k]||season.k));
-  const IMG={img:true};
+  const tile=(k,cap,u,n)=>({img:TILES[k],cap,u,s:n});
   return [
    {label:season.label,u:season.u,s:'r',seasonal:true,cols:season.dd||null},
    {label:'Flowers',u:'/collections/view-all',cols:[
      {t:'Collections',links:[[sc.label,sc.u,'r'],['Luxe Collection','/luxe-collection/cat5100101'],['Rose Collection','/rose-collection/cat5100126']]},
      {t:'Shop',links:[['Subscriptions','/subscriptions'],['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Shop All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},
-     IMG
+     tile('flowers','Shop the '+sc.label,sc.u)
    ]},
    {label:'Occasions',u:'/all-flowers-gifts/cat6680049',s:'n',cols:[
-     {t:'Celebrate',s:'n',links:[['Birthday','/birthday-flowers/cat15080013'],['Love & Romance','/love-romance/cat15080015'],['Thank You','/thank-you-flowers/cat15130020'],['New Baby','/new-baby-gifts/cat5100125']]},
-     {t:'Comfort',links:[['Get Well','/get-well-flowers/cat15080014','n'],['Sympathy for the Home','/sympathy-for-the-home/cat5100127','m'],['Sympathy for the Service','/flowers-for-the-funeral/cat5100128','m']]},
-     IMG
+     {t:'Celebrate',s:'n',links:[['Birthday','/birthday-flowers/cat15080013'],['Love & Romance','/love-romance/cat15080015'],['Congratulations','/congratulations-flowers/cat15130021'],['Thank You','/thank-you-flowers/cat15130020'],['Just Because','/just-because-flowers/cat15130022']]},
+     {t:'Comfort',links:[['Get Well','/get-well-flowers/cat15080014','n'],['Hospital Flower Delivery','/hospital-flower-delivery/cat15130024','n'],['Sympathy for the Home','/sympathy-for-the-home/cat5100127','m'],['Sympathy for the Service','/flowers-for-the-funeral/cat5100128','m']]},
+     tile('occ','Shop Birthday Flowers','/birthday-flowers/cat15080013','n')
    ]},
    {label:'Gourmet',u:'/gourmet-gift-boxes/cat7950006',cols:[
      {t:'',links:[['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195']]},
-     IMG
+     tile('gourmet','Shop Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006')
    ]},
    {label:'Plants',u:'/interior-exterior-plants/cat5130080',cols:[
      {t:'',links:[['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Statement Container Collection','/statement-containers/cat14660005']]},
-     IMG
+     tile('plants','Shop Plants','/interior-exterior-plants/cat5130080')
    ]},
    {label:'Locations',u:'/locations',s:'n',cols:[
      {t:'Shops & Design Studios',links:[['Boston (Back Bay)','/boston-florist'],['Chestnut Hill, MA','/chestnut-hill-florist'],['Wellesley, MA','/wellesley-florist'],['Greenwich, CT','/greenwich-florist'],['New York City','/nyc-florist'],['All Locations & Hours','/locations']]},
      {t:'Greater Boston Delivery',links:[['Belmont','/belmont-florist'],['Brookline','/brookline-florist'],['Cambridge','/cambridge-florist'],['Cohasset','/cohasset-florist'],['Concord','/concord-florist']]},
      {t:'\u00a0',links:[['Hingham','/hingham-florist'],['Needham','/needham-florist'],['Newton','/newton-florist'],['Weston','/weston-florist'],['Winchester','/winchester-florist']]},
-     {t:'Same-Day Delivery',promo:true,links:[['Same-Day Flower Delivery','/same-day-flower-delivery/cat15130023','n',true]],note:'Same-day delivery throughout Boston, New York City, and Greenwich.'}
+     tile('loc','Same-Day Flower Delivery','/same-day-flower-delivery/cat15130023','n')
    ]},
    {label:'Events',u:'/weddings-and-events',cols:[
      {t:'',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]},
-     IMG
+     tile('events','Plan Your Wedding','/weddings-and-events/weddings')
    ]},
    {label:'Home & Office',u:'/services/residential-services',s:'m',cols:[
      {t:'For the Home',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Winston%20at%20Home_2026_Web.pdf'],['Garden Design','/garden-design/residential']]},
      {t:'For the Office',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Corporate%20_%20Hotel%20Collection_2026_Web.pdf'],['Client & Employee Gifting','/services/client-employee-gifts'],['Garden Design','/garden-design/office']]},
-     IMG
+     tile('home','Home & Office Subscriptions','/subscriptions')
    ]},
    {label:'Why Winston',u:'/about-winston-flowers',cols:[
      {t:'',links:[['About Us','/about-winston-flowers'],['The Flower Story','/flower-story'],['Our People','/staff'],['Floral & Plant Care','/care'],['Contact Us','/contact']]},
-     IMG
+     tile('why','Meet Our People','/staff')
    ]}
   ];
 }
@@ -273,15 +280,15 @@ const CURRENT_NAV=[
  {label:'Late Summer Collection',u:'/late-summer-collection/cat9080066',seasonal:true},
  {label:'Flowers',u:'/collections/view-all',cols:[
    {t:'',links:[['Late Summer Collection','/late-summer-collection/cat9080066'],['Luxe Collection','/luxe-collection/cat5100101'],['Rose Collection','/rose-collection/cat5100126']]},
-   {t:'',links:[['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Subscriptions','/subscriptions'],['Sympathy for Home','/sympathy-for-the-home/cat5100127','o'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128','o'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:true}]},
- {label:'Gourmet',u:'/collections/view-all',cols:[{t:'',links:[['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:true}]},
- {label:'Plants',u:'/collections/view-all',cols:[{t:'',links:[['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Statement Container Collection','/statement-containers/cat14660005'],['Garden Design for the Home','/garden-design/residential'],['Garden Design for the Office','/garden-design/office']]},{img:true}]},
- {label:'Events',u:'/weddings-and-events',cols:[{t:'',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]},{img:true}]},
- {label:'Home',u:'/services/residential-services',s:'x',cols:[{t:'',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Winston%20at%20Home_2026_Web.pdf'],['Garden Design','/garden-design/residential'],['Private Events','/weddings-and-events/private-events']]},{img:true}]},
- {label:'Office',u:'/services/corporate-services',s:'x',cols:[{t:'',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Corporate%20_%20Hotel%20Collection_2026_Web.pdf'],['Client & Employee Gifting','/services/client-employee-gifts'],['Garden Design','/garden-design/office'],['Corporate Events','/weddings-and-events/corporate-nonprofit']]},{img:true}]},
+   {t:'',links:[['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Subscriptions','/subscriptions'],['Sympathy for Home','/sympathy-for-the-home/cat5100127','o'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128','o'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:TILES.flowers}]},
+ {label:'Gourmet',u:'/collections/view-all',cols:[{t:'',links:[['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:TILES.gourmet}]},
+ {label:'Plants',u:'/collections/view-all',cols:[{t:'',links:[['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Statement Container Collection','/statement-containers/cat14660005'],['Garden Design for the Home','/garden-design/residential'],['Garden Design for the Office','/garden-design/office']]},{img:TILES.plants}]},
+ {label:'Events',u:'/weddings-and-events',cols:[{t:'',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]},{img:TILES.events}]},
+ {label:'Home',u:'/services/residential-services',s:'x',cols:[{t:'',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Winston%20at%20Home_2026_Web.pdf'],['Garden Design','/garden-design/residential'],['Private Events','/weddings-and-events/private-events']]},{img:TILES.home}]},
+ {label:'Office',u:'/services/corporate-services',s:'x',cols:[{t:'',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Corporate%20_%20Hotel%20Collection_2026_Web.pdf'],['Client & Employee Gifting','/services/client-employee-gifts'],['Garden Design','/garden-design/office'],['Corporate Events','/weddings-and-events/corporate-nonprofit']]},{img:TILES.office}]},
  {label:'Why Winston',u:'/',cols:[
    {t:'',links:[['About Us','/about-winston-flowers'],['The Flower Story','/flower-story'],['The Gourmet Story','/gourmet-story'],['Floral & Plant Care','/care']]},
-   {t:'',links:[['Our People','/staff'],['Join Our Team','/careers'],['Donation Requests','/donations'],['Contact Us','/contact']]},{img:true}]},
+   {t:'',links:[['Our People','/staff'],['Join Our Team','/careers'],['Donation Requests','/donations'],['Contact Us','/contact']]},{img:TILES.why}]},
  {label:'Blog',u:'/blog',s:'x'}
 ];
 
@@ -318,7 +325,7 @@ function curTopTag(item){ // current-view annotations for items that go away or 
 function desktop(nav,footer,view){
   const items=nav.map(it=>{
     const t = view==='current' ? (['Home','Office'].includes(it.label)?` <span class="tag t-moved">Merges</span>`:it.label==='Blog'?` <span class="tag t-moved">Moves</span>`:it.seasonal?` <span class="tag t-rot">Rotates</span>`:'') : tag(it.s,view);
-    const dd = it.cols ? `<div class="dd"><div class="dd-inner">${it.cols.map(c=>c.img?`<div class="col imgtile"><div class="ph">Existing image tile</div></div>`:`<div class="col${c.promo?' promo':''}">${c.t?`<h4>${esc(c.t)}${tag(c.s,view)}</h4>`:''}<ul>${c.links.map(l=>linkHTML(l,view)).join('')}</ul>${c.note?`<div class="note">${esc(c.note)}</div>`:''}</div>`).join('')}</div></div>`:'';
+    const dd = it.cols ? `<div class="dd"><div class="dd-inner">${it.cols.map(c=>c.img?`<div class="col imgtile">${c.u?`<a href="${esc(href(c.u))}" target="_blank" rel="noopener">`:""}<img src="${esc(c.img)}" alt="">${c.cap?`<span class="cap">${esc(c.cap)} &rsaquo;</span>`:""}${c.u?`</a>`:""}${tag(c.s,view)}</div>`:`<div class="col${c.promo?' promo':''}">${c.t?`<h4>${esc(c.t)}${tag(c.s,view)}</h4>`:''}<ul>${c.links.map(l=>linkHTML(l,view)).join('')}</ul>${c.note?`<div class="note">${esc(c.note)}</div>`:''}</div>`).join('')}</div></div>`:'';
     return `<li class="${it.seasonal?'seasonal':''}"><a href="${esc(href(it.u))}" target="_blank" rel="noopener" ${it.cols?'aria-haspopup="true"':''}>${esc(it.label)}${t}</a>${dd}</li>`;}).join('');
   const fc=footer.length;
   const cols=footer.map(c=>{
