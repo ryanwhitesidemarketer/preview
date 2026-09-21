@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Winston Flowers · Navigation Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b1b1b; --ink2:#4a4a4a; --mute:#8a8580; --line:#e6e1da; --paper:#ffffff; --cream:#f7f4ef; --stone:#efeae3;
+  --new:#4f6b4a; --newbg:#e8efe4; --moved:#8a5a1e; --movedbg:#f6ecdc; --rot:#5a4a78; --rotbg:#ece7f4; --rem:#9b3b3b; --rembg:#f6e3e3;
+  --serif:"Cormorant Garamond", Georgia, serif; --sans:"Jost", "Avenir Next", Avenir, Helvetica, Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--stone);color:var(--ink);font-family:var(--sans);font-weight:400;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+/* ---------- control bar ---------- */
+.bar{position:sticky;top:0;z-index:50;background:#141414;color:#f3efe9;padding:14px 24px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between}
+.bar h1{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:.02em;margin:0}
+.bar h1 small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b9b2a8;margin-top:2px}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.seg{display:inline-flex;border:1px solid #4a4a4a;border-radius:999px;overflow:hidden}
+.seg button{background:none;border:0;color:#d8d2c9;font:500 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:#f3efe9;color:#141414}
+.ctl-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9d968c;margin-right:6px}
+.bar select{background:#232323;color:#f3efe9;border:1px solid #4a4a4a;border-radius:999px;padding:8px 12px;font:500 12px var(--sans)}
+.chk{display:inline-flex;gap:8px;align-items:center;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#d8d2c9;cursor:pointer}
+.chk input{accent-color:#f3efe9;width:15px;height:15px}
+/* ---------- intro ---------- */
+.wrap{max-width:1240px;margin:0 auto;padding:28px 24px 60px}
+.intro{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:end;margin-bottom:22px}
+.intro p{margin:0;color:var(--ink2);font-size:15px;line-height:1.6;max-width:640px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.tag{display:inline-block;font:600 9.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:4px 6px;border-radius:3px;vertical-align:middle;white-space:nowrap}
+.t-new{background:var(--newbg);color:var(--new)} .t-moved{background:var(--movedbg);color:var(--moved)}
+.t-rot{background:var(--rotbg);color:var(--rot)} .t-rem{background:var(--rembg);color:var(--rem)}
+body:not(.hl) .site .tag{display:none}
+/* ---------- site frame ---------- */
+.stage{display:flex;justify-content:center}
+.site{background:var(--paper);width:100%;box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.08);border-radius:6px;overflow:visible}
+.supernav{display:flex;justify-content:space-between;align-items:center;padding:8px 28px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink2);letter-spacing:.04em}
+.supernav .r{display:flex;gap:22px}
+.logo{text-align:center;padding:22px 0 16px}
+.logo .wm{font-family:var(--serif);font-weight:500;font-size:34px;letter-spacing:.32em;text-transform:uppercase;padding-left:.32em}
+.logo .sub{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--mute);margin-top:4px}
+/* desktop nav */
+nav.dnav{border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative}
+nav.dnav>ul{list-style:none;margin:0 auto;padding:0 12px;display:flex;justify-content:center;flex-wrap:wrap}
+nav.dnav>ul>li{position:static}
+nav.dnav>ul>li>a{display:block;position:relative;padding:20px 13px 16px;font:500 12.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid transparent;white-space:nowrap}
+nav.dnav>ul>li>a .tag{position:absolute;top:3px;left:50%;transform:translateX(-50%);font-size:8px;padding:2px 5px;letter-spacing:.1em}
+nav.dnav>ul>li.seasonal>a{color:#7a5230}
+nav.dnav>ul>li:hover>a,nav.dnav>ul>li.open>a,nav.dnav>ul>li:focus-within>a{border-bottom-color:var(--ink)}
+.dd{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 18px 30px rgba(0,0,0,.08);z-index:20;padding:26px 0 30px}
+nav.dnav>ul>li:hover .dd,nav.dnav>ul>li.open .dd,nav.dnav>ul>li:focus-within .dd{display:block}
+.dd-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:center;gap:56px;padding:0 28px}
+.col{min-width:170px}
+.col h4 .tag{margin-left:6px;font-size:8.5px}
+.col h4{margin:0 0 12px;font:600 10.5px/1.2 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.col ul{list-style:none;margin:0;padding:0}
+.col li{margin:0 0 9px}
+.col a{text-decoration:none;font-size:14.5px;color:var(--ink);line-height:1.35}
+.col a:hover{text-decoration:underline;text-underline-offset:3px}
+.col li .tag{margin-left:6px}
+.col a.feature{font-family:var(--serif);font-size:19px;font-weight:600}
+.col .note{font-size:12px;color:var(--mute);margin-top:12px;max-width:220px;line-height:1.45}
+.col.promo{background:var(--cream);padding:18px 20px;border-radius:4px;max-width:250px}
+.hero{height:340px;background:linear-gradient(180deg,#f5f1eb,#ebe4da);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mute)}
+.hero .h{font-family:var(--serif);font-size:30px;color:#6d655b}
+.hero .s{font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-top:8px}
+/* footer */
+footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44px 28px 26px;border-radius:0 0 6px 6px}
+.fcols{display:grid;grid-template-columns:repeat(var(--fc,5),minmax(0,1fr));gap:26px;max-width:1160px;margin:0 auto}
+.fcols h5{margin:0 0 14px;font:600 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.fcols h5 .tag{margin-left:6px}
+.fcols ul{list-style:none;margin:0;padding:0}
+.fcols li{margin:0 0 8px;font-size:13.5px;line-height:1.35}
+.fcols li a{text-decoration:none;color:var(--ink2)}
+.fcols li a:hover{color:var(--ink);text-decoration:underline}
+.fcols li .addr{display:block;font-size:12px;color:var(--mute)}
+.fcols li .tag{margin-left:6px}
+.fcols li.removed a{text-decoration:line-through;color:#a9a39b}
+.flegal{max-width:1160px;margin:30px auto 0;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--mute);flex-wrap:wrap;gap:8px}
+/* mobile frame */
+.phone{width:390px;max-width:100%;border:10px solid #1a1a1a;border-radius:38px;background:#fff;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.phone .mbar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:14px 12px;border-bottom:1px solid var(--line)}
+.phone .burger{width:44px;height:36px;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 10px}
+.phone .burger span{display:block;height:1.5px;background:var(--ink)}
+.phone .mwm{text-align:center;font-family:var(--serif);font-size:19px;letter-spacing:.26em;text-transform:uppercase}
+.phone .mcart{text-align:right;font-size:12px;color:var(--ink2)}
+.mmenu{display:none;border-bottom:1px solid var(--line)}
+.phone.menu-open .mmenu{display:block}
+.mmenu>ul{list-style:none;margin:0;padding:0}
+.mmenu>ul>li{border-top:1px solid var(--line)}
+.mmenu>ul>li>button,.mmenu>ul>li>a{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:15px 18px;font:500 13px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;cursor:pointer;text-align:left}
+.mmenu>ul>li.seasonal>a,.mmenu>ul>li.seasonal>button{color:#7a5230}
+.mmenu .chev{font-size:16px;transition:transform .2s}
+.mmenu li.x .chev{transform:rotate(45deg)}
+.msub{display:none;background:var(--cream);padding:6px 18px 14px}
+.mmenu li.x .msub{display:block}
+.msub h6{margin:12px 0 6px;font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.msub a{display:block;padding:7px 0;font-size:15px;text-decoration:none;color:var(--ink)}
+.mhero{height:230px;background:linear-gradient(180deg,#f5f1eb,#ebe4da);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:22px;color:#6d655b;text-align:center;padding:0 30px}
+.phone.menu-open .mhero{display:none}
+.mfoot{background:var(--cream);padding:8px 0 20px}
+.mfoot details{border-bottom:1px solid var(--line)}
+.mfoot summary{list-style:none;cursor:pointer;padding:14px 18px;font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:space-between}
+.mfoot summary::-webkit-details-marker{display:none}
+.mfoot details ul{list-style:none;margin:0;padding:0 18px 12px}
+.mfoot details li{padding:6px 0;font-size:14px}
+.mfoot details li a{text-decoration:none;color:var(--ink2)}
+.mfoot .addr{display:block;font-size:12px;color:var(--mute)}
+.mfoot li.removed a{text-decoration:line-through;color:#a9a39b}
+.hint{text-align:center;font-size:12px;color:var(--mute);margin:14px 0 0;letter-spacing:.04em}
+/* summary */
+.summary{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.card{background:#fff;border-radius:6px;padding:24px 26px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.card h3{font-family:var(--serif);font-weight:600;font-size:24px;margin:0 0 14px}
+.card ol{margin:0;padding-left:20px}
+.card li{margin:0 0 10px;font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.card li b{color:var(--ink);font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stat{border:1px solid var(--line);border-radius:5px;padding:14px 16px}
+.stat .n{font-family:var(--serif);font-size:34px;font-weight:600;line-height:1}
+.stat .d{font-size:12.5px;color:var(--ink2);margin-top:6px;line-height:1.4}
+.src{font-size:11.5px;color:var(--mute);margin-top:12px;line-height:1.5}
+.cal{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.cal td{padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
+.cal td:first-child{white-space:nowrap;color:var(--mute);width:40%}
+.cal tr.cur td{background:var(--rotbg)}
+.cal button{background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.foot-note{margin-top:30px;text-align:center;font-size:12px;color:var(--mute)}
+@media (max-width:960px){
+  .intro,.summary{grid-template-columns:1fr}
+  .legend{justify-content:flex-start}
+  .fcols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dd-inner{flex-wrap:wrap;gap:26px}
+}
+@media (max-width:640px){
+  .wrap{padding:18px 12px 40px}
+  .bar{padding:12px}
+  .stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="hl">
+
+<div class="bar">
+  <h1>Winston Flowers<small>Top &amp; footer navigation proposal · September 2026</small></h1>
+  <div class="ctrls">
+    <span><span class="ctl-label">View</span><span class="seg" id="segView"><button data-v="proposed" aria-pressed="true">Proposed</button><button data-v="current" aria-pressed="false">Current</button></span></span>
+    <span><span class="ctl-label">Device</span><span class="seg" id="segDev"><button data-d="desktop" aria-pressed="true">Desktop</button><button data-d="mobile" aria-pressed="false">Mobile</button></span></span>
+    <span id="seasonCtl"><span class="ctl-label">Season</span><select id="season" aria-label="Preview season"></select></span>
+    <label class="chk"><input type="checkbox" id="hl" checked> Highlight changes</label>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <p id="introText"></p>
+    <div class="legend">
+      <span class="tag t-new">New</span><span class="tag t-moved">Moved / merged</span><span class="tag t-rot">Rotates seasonally</span>
+    </div>
+  </div>
+
+  <div class="stage" id="stage"></div>
+  <p class="hint" id="hint"></p>
+
+  <div class="summary">
+    <div class="card">
+      <h3>What changes</h3>
+      <ol>
+        <li><b>First slot rotates with the calendar.</b> The seasonal collection by default, swapped for the major holiday (Thanksgiving, Holiday, Valentine's Day, Mother's Day) during its selling window.</li>
+        <li><b>New Occasions menu</b> links all eight new occasion pages, plus Sympathy, which moves out of Flowers.</li>
+        <li><b>New Locations menu</b> puts every shop, design studio and Greater Boston delivery town in the main navigation, with Same-Day Delivery featured.</li>
+        <li><b>Home and Office merge</b> into one Home &amp; Office menu, so the bar stays at nine items.</li>
+        <li><b>Blog moves</b> into Why Winston.</li>
+        <li><b>Footer gets simpler:</b> the 17 location links become four shops and two studios with addresses. Events, Home and Office merge into one Services column, and a Customer Care column is added.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Why</h3>
+      <div class="stats">
+        <div class="stat"><div class="n">66%</div><div class="d">of non-brand Google clicks come from searches that name a city or say "near me."</div></div>
+        <div class="stat"><div class="n">0.2%</div><div class="d">of non-homepage Google clicks reach the 15 city pages, which are linked only from the footer. The /locations pages get 43%.</div></div>
+        <div class="stat"><div class="n">2% vs 16%</div><div class="d">share of page views on occasion pages: Winston vs the typical florist site with an Occasions menu.</div></div>
+        <div class="stat"><div class="n">17%</div><div class="d">of all page views go to seasonal and holiday collections, the pages the first slot promotes.</div></div>
+      </div>
+      <p class="src">Sources: Winston Flowers GA4 and Google Search Console, Sept 21, 2025 to Sept 20, 2026. Benchmarks come from anonymized GA4 and Search Console data for comparable florist sites on the same platform. Full reasoning is in the accompanying rationale document.</p>
+      <h3 style="margin-top:22px;font-size:20px">First-slot calendar</h3>
+      <table class="cal" id="cal"></table>
+    </div>
+  </div>
+  <p class="foot-note">Mockup for review only. Links open the live winstonflowers.com pages. City links assume the approved v2 city pages replace the current /locations shop pages.</p>
+</div>
+
+<script>
+const BASE='https://www.winstonflowers.com';
+
+/* ---------- first-slot rotation ---------- */
+const SEASONS=[
+ {k:'autumn',   when:'Mid Sep to Oct',            label:'Autumn Collection',   u:'/autumn-collection/cat7850012'},
+ {k:'thanks',   when:'Nov 1 to Thanksgiving',     label:'Thanksgiving',        u:'/thanksgiving-centerpieces/cat7900016',
+   dd:[{t:'Thanksgiving',links:[['Thanksgiving Centerpieces','/thanksgiving-centerpieces/cat7900016'],['Autumn Collection','/autumn-collection/cat7850012']]}]},
+ {k:'holiday',  when:'Thanksgiving to Dec 24',    label:'Holiday',             u:'/holiday-flowers-gifts/cat8000033',
+   dd:[{t:'Holiday',links:[['Holiday Flowers & Gifts','/holiday-flowers-gifts/cat8000033'],['Holiday Centerpieces','/holiday-centerpieces/cat6940011'],['Holiday Decor Collection','/holiday-decor-collection/cat9480013'],['Holiday Wreaths','/holiday-wreaths/cat6950066']]},
+       {t:'Holiday Services',links:[['Holidays at Home','/holiday/holidays-at-home'],['Corporate Holiday','/holiday/corporate-holiday']]}]},
+ {k:'winter',   when:'Dec 26 to mid Jan',         label:'Winter Collection',   u:'/winter-collection/cat6980040'},
+ {k:'vday',     when:'Mid Jan to Feb 14',         label:"Valentine's Day",     u:'/valentines-day/cat6990092',
+   dd:[{t:"Valentine's Day",links:[["Valentine's Day",'/valentines-day/cat6990092'],['Gifts Under $200','/valentines-day-gifts-under-200/cat14250024'],['Rose Collection','/rose-collection/cat5100126']]}]},
+ {k:'spring',   when:'Feb 15 to mid Apr',         label:'Spring Collection',   u:'/spring-collection/cat13280021'},
+ {k:'mom',      when:"Mid Apr to Mother's Day",   label:"Mother's Day",        u:'/mothers-day-gifts/cat7390111',
+   dd:[{t:"Mother's Day",links:[["Mother's Day Gifts",'/mothers-day-gifts/cat7390111'],['Luxe Collection','/luxe-collection/cat5100101'],['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006']]}]},
+ {k:'latespring',when:'Mid May to Jun',           label:'Late Spring Collection',u:'/late-spring-collection/cat6420101'},
+ {k:'summer',   when:'Jul',                      label:'Summer Collection',   u:'/summer-collection/cat6580055'},
+ {k:'latesummer',when:'Aug to mid Sep',           label:'Late Summer Collection',u:'/late-summer-collection/cat9080066'},
+];
+// the collection shown inside Flowers / footer follows the collection behind the holiday
+const SEASON_COLLECTION={thanks:'autumn',holiday:'winter',vday:'winter',mom:'spring'};
+
+/* ---------- navigation data ---------- */
+/* s: n=new, m=moved/merged, r=rotates, x=removed (current view only) */
+function proposedNav(season){
+  const sc=SEASONS.find(s=>s.k===(SEASON_COLLECTION[season.k]||season.k));
+  return [
+   {label:season.label,u:season.u,s:'r',seasonal:true,cols:season.dd||null},
+   {label:'Flowers',u:'/collections/view-all',cols:[
+     {t:'Collections',links:[[sc.label,sc.u,'r'],['Luxe Collection','/luxe-collection/cat5100101'],['Rose Collection','/rose-collection/cat5100126']]},
+     {t:'Shop',links:[['Subscriptions','/subscriptions'],['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Shop All Flowers & Gifts','/all-flowers-gifts/cat6680049']]}
+   ]},
+   {label:'Occasions',u:'/all-flowers-gifts/cat6680049',s:'n',cols:[
+     {t:'Celebrate',s:'n',links:[['Birthday','/birthday-flowers/cat15080013'],['Love & Romance','/love-romance/cat15080015'],['Congratulations','/congratulations-flowers/cat15130021'],['Thank You','/thank-you-flowers/cat15130020'],['Just Because','/just-because-flowers/cat15130022']]},
+     {t:'Comfort',links:[['Get Well','/get-well-flowers/cat15080014','n'],['Hospital Flower Delivery','/hospital-flower-delivery/cat15130024','n'],['Sympathy for the Home','/sympathy-for-the-home/cat5100127','m'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128','m']]}
+   ]},
+   {label:'Gourmet',u:'/gourmet-gift-boxes/cat7950006',cols:[
+     {t:'',links:[['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['Shop All Flowers & Gifts','/all-flowers-gifts/cat6680049']]}
+   ]},
+   {label:'Plants',u:'/interior-exterior-plants/cat5130080',cols:[
+     {t:'',links:[['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Statement Container Collection','/statement-containers/cat14660005'],['Garden Design for the Home','/garden-design/residential'],['Garden Design for the Office','/garden-design/office']]}
+   ]},
+   {label:'Locations',u:'/locations',s:'n',cols:[
+     {t:'Shops & Design Studios',links:[['Boston (Back Bay)','/boston-florist'],['Chestnut Hill, MA','/chestnut-hill-florist'],['Wellesley, MA','/wellesley-florist'],['Greenwich, CT','/greenwich-florist'],['New York City','/nyc-florist'],['All Locations & Hours','/locations']]},
+     {t:'Greater Boston Delivery',links:[['Belmont','/belmont-florist'],['Brookline','/brookline-florist'],['Cambridge','/cambridge-florist'],['Cohasset','/cohasset-florist'],['Concord','/concord-florist']]},
+     {t:' ',links:[['Hingham','/hingham-florist'],['Needham','/needham-florist'],['Newton','/newton-florist'],['Weston','/weston-florist'],['Winchester','/winchester-florist']]},
+     {t:'Same-Day Delivery',promo:true,links:[['Same-Day Flower Delivery','/same-day-flower-delivery/cat15130023','n',true]],note:'Same-day delivery throughout Boston, New York City, and Greenwich.'}
+   ]},
+   {label:'Events',u:'/weddings-and-events',cols:[
+     {t:'',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]}
+   ]},
+   {label:'Home & Office',u:'/services/residential-services',s:'m',cols:[
+     {t:'For the Home',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Winston%20at%20Home_2026_Web.pdf'],['Garden Design','/garden-design/residential'],['Private Events','/weddings-and-events/private-events'],['Holidays at Home','/holiday/holidays-at-home','m']]},
+     {t:'For the Office',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Corporate%20_%20Hotel%20Collection_2026_Web.pdf'],['Client & Employee Gifting','/services/client-employee-gifts'],['Garden Design','/garden-design/office'],['Corporate Events','/weddings-and-events/corporate-nonprofit'],['Corporate Holiday','/holiday/corporate-holiday','m']]}
+   ]},
+   {label:'Why Winston',u:'/about-winston-flowers',cols:[
+     {t:'Our Story',links:[['About Us','/about-winston-flowers'],['The Flower Story','/flower-story'],['The Gourmet Story','/gourmet-story'],['Floral & Plant Care','/care'],['Blog','/blog','m']]},
+     {t:'Company',links:[['Our People','/staff'],['Join Our Team','/careers'],['Donation Requests','/donations'],['Contact Us','/contact']]}
+   ]}
+  ];
+}
+const CURRENT_NAV=[
+ {label:'Late Summer Collection',u:'/late-summer-collection/cat9080066',seasonal:true},
+ {label:'Flowers',u:'/collections/view-all',cols:[
+   {t:'',links:[['Late Summer Collection','/late-summer-collection/cat9080066'],['Luxe Collection','/luxe-collection/cat5100101'],['Rose Collection','/rose-collection/cat5100126']]},
+   {t:'',links:[['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Subscriptions','/subscriptions'],['Sympathy for Home','/sympathy-for-the-home/cat5100127','o'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128','o'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]}]},
+ {label:'Gourmet',u:'/collections/view-all',cols:[{t:'',links:[['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]}]},
+ {label:'Plants',u:'/collections/view-all',cols:[{t:'',links:[['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Statement Container Collection','/statement-containers/cat14660005'],['Garden Design for the Home','/garden-design/residential'],['Garden Design for the Office','/garden-design/office']]}]},
+ {label:'Events',u:'/weddings-and-events',cols:[{t:'',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]}]},
+ {label:'Home',u:'/services/residential-services',s:'x',cols:[{t:'',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Winston%20at%20Home_2026_Web.pdf'],['Garden Design','/garden-design/residential'],['Private Events','/weddings-and-events/private-events']]}]},
+ {label:'Office',u:'/services/corporate-services',s:'x',cols:[{t:'',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston%20Flowers_Corporate%20_%20Hotel%20Collection_2026_Web.pdf'],['Client & Employee Gifting','/services/client-employee-gifts'],['Garden Design','/garden-design/office'],['Corporate Events','/weddings-and-events/corporate-nonprofit']]}]},
+ {label:'Why Winston',u:'/',cols:[
+   {t:'',links:[['About Us','/about-winston-flowers'],['The Flower Story','/flower-story'],['The Gourmet Story','/gourmet-story'],['Floral & Plant Care','/care']]},
+   {t:'',links:[['Our People','/staff'],['Join Our Team','/careers'],['Donation Requests','/donations'],['Contact Us','/contact']]}]},
+ {label:'Blog',u:'/blog',s:'x'}
+];
+
+function proposedFooter(season){
+  const sc=SEASONS.find(s=>s.k===(SEASON_COLLECTION[season.k]||season.k));
+  return [
+   {t:'Shop',links:[[sc.label,sc.u,'r'],['Luxe Collection','/luxe-collection/cat5100101'],['Roses','/rose-collection/cat5100126'],['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['Plants','/interior-exterior-plants/cat5130080'],['Subscriptions','/subscriptions'],['Sympathy for the Home','/sympathy-for-the-home/cat5100127'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128'],['Shop All','/all-flowers-gifts/cat6680049']]},
+   {t:'Services',s:'m',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit'],['Home Subscriptions','/services/residential-services'],['Office Subscriptions','/services/corporate-services'],['Client & Employee Gifting','/services/client-employee-gifts'],['Garden Design','/garden-design/residential']]},
+   {t:'Visit Our Shops',s:'m',links:[['Boston · Back Bay','/boston-florist',null,'131 Newbury Street'],['Chestnut Hill','/chestnut-hill-florist',null,'27 Boylston Street'],['Wellesley','/wellesley-florist',null,'31 Central Street'],['Greenwich, CT','/greenwich-florist',null,'154 Prospect Street'],['Boston Design Studio','/locations/boston-design-studio',null,'By appointment'],['New York City Design Studio','/locations/new-york-city-design-studio',null,'By appointment']]},
+   {t:'Why Winston',links:[['About Us','/about-winston-flowers'],['The Flower Story','/flower-story'],['The Gourmet Story','/gourmet-story'],['Our People','/staff'],['Blog','/blog','n'],['Careers','/careers'],['Donation Requests','/donations']]},
+   {t:'Customer Care',s:'n',links:[['Contact Us','/contact'],['My Account & Orders','/account/login.jsp','n'],['Client Rewards Program','/client-rewards-program','n'],['Floral & Plant Care','/care'],['Return Policy','/return-policy'],['Privacy Policy','/privacy-policy']]}
+  ];
+}
+const CURRENT_FOOTER=[
+ {t:'Shop Products',links:[['Late Summer Collection','/late-summer-collection/cat9080066'],['Luxe Collection','/luxe-collection/cat5100101'],['Roses','/rose-collection/cat5100126'],['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Subscriptions','/subscriptions'],['Sympathy for the Home','/sympathy-for-the-home/cat5100127'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128'],['Shop All','/all-flowers-gifts/cat6680049']]},
+ {t:'Visit Our Shops',links:[['Boston (Back Bay), MA','/locations/back-bay'],['Chestnut Hill, MA','/locations/chestnut-hill'],['Wellesley, MA','/locations/wellesley'],['Greenwich, CT','/locations/greenwich'],['Greater Boston','/locations/boston-design-studio'],['New York City','/locations/new-york-city-design-studio'],['Belmont, MA','/belmont-florist','u'],['Brookline, MA','/brookline-florist','u'],['Cambridge, MA','/cambridge-florist','u'],['Cohasset, MA','/cohasset-florist','u'],['Concord, MA','/concord-florist','u'],['Hingham, MA','/hingham-florist','u'],['Needham, MA','/needham-florist','u'],['Newton, MA','/newton-florist','u'],['Weston, MA','/weston-florist','u'],['Winchester, MA','/winchester-florist','u']]},
+ {t:'Events',s:'x',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]},
+ {t:'Home',s:'x',links:[['Weekly & Monthly Subscriptions','https://assets.eflorist.com/themes/custom-templates/3/32084100/32084100-default/pdf/Winston_Flowers_Residential_Collection_Web.pdf'],['Garden Design','/garden-design/residential'],['Private Events','/weddings-and-events/private-events'],['Holiday','/holiday/holidays-at-home']]},
+ {t:'Office',s:'x',links:[['Weekly & Monthly Subscriptions','https://issuu.com/winstonflowers/docs/winston_flowers_corporate_hotel_collection_web'],['Client & Employee Gift Program','/services/client-employee-gifts'],['Garden Design','/garden-design/office'],['Corporate Events','/weddings-and-events/corporate-nonprofit'],['Holiday','/holiday/corporate-holiday']]},
+ {t:'Why Winston',links:[['About Us','/about-winston-flowers'],['The Flower Story','/flower-story'],['The Gourmet Story','/gourmet-story'],['Floral & Plant Care','/care'],['Our People','/staff'],['Careers','/careers'],['Donation Requests','/donations'],['Contact Us','/contact'],['Return Policy','/return-policy'],['Privacy Policy','/privacy-policy']]}
+];
+
+/* ---------- rendering ---------- */
+const state={view:'proposed',dev:'desktop',season:'autumn'};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const href=u=>u.startsWith('http')?u:BASE+u;
+const TAGS={u:['t-moved','To top nav'],o:['t-moved','To Occasions'],n:['t-new','New'],m:['t-moved','Moved'],f:['t-moved','From footer'],r:['t-rot','Rotates'],x:['t-rem','Removed']};
+function tag(s,view){ if(!s) return ''; if(view==='proposed'&&s==='x') return ''; if(view==='current'&&!['x','u','o'].includes(s)) return ''; if(view==='proposed'&&['u','o'].includes(s)) return '';
+  const [c,l]=TAGS[s]; return ` <span class="tag ${c}">${l}</span>`; }
+function linkHTML(l,view){const [label,u,s,feature]=l;return `<li><a ${feature?'class="feature" ':''}href="${esc(href(u))}" target="_blank" rel="noopener">${esc(label)}</a>${tag(s,view)}</li>`;}
+function curTopTag(item){ // current-view annotations for items that go away or move
+  const map={'Home':'m','Office':'m','Blog':'m'}; return map[item.label]?` <span class="tag t-moved">Merges</span>`:'';
+}
+function desktop(nav,footer,view){
+  const items=nav.map(it=>{
+    const t = view==='current' ? (['Home','Office'].includes(it.label)?` <span class="tag t-moved">Merges</span>`:it.label==='Blog'?` <span class="tag t-moved">Moves</span>`:it.seasonal?` <span class="tag t-rot">Rotates</span>`:'') : tag(it.s,view);
+    const dd = it.cols ? `<div class="dd"><div class="dd-inner">${it.cols.map(c=>`<div class="col${c.promo?' promo':''}">${c.t?`<h4>${esc(c.t)}${tag(c.s,view)}</h4>`:''}<ul>${c.links.map(l=>linkHTML(l,view)).join('')}</ul>${c.note?`<div class="note">${esc(c.note)}</div>`:''}</div>`).join('')}</div></div>`:'';
+    return `<li class="${it.seasonal?'seasonal':''}"><a href="${esc(href(it.u))}" target="_blank" rel="noopener" ${it.cols?'aria-haspopup="true"':''}>${esc(it.label)}${t}</a>${dd}</li>`;}).join('');
+  const fc=footer.length;
+  const cols=footer.map(c=>{
+    const ht = view==='current' ? (['Events','Home','Office'].includes(c.t)?` <span class="tag t-moved">Merges</span>`:'') : tag(c.s,view);
+    return `<div><h5>${esc(c.t)}${ht}</h5><ul>${c.links.map(l=>{const [label,u,s,addr]=l;return `<li class="${view==='current'&&s==='x'?'removed':''}"><a href="${esc(href(u))}" target="_blank" rel="noopener">${esc(label)}</a>${tag(s,view)}${addr?`<span class="addr">${esc(addr)}</span>`:''}</li>`}).join('')}</ul></div>`}).join('');
+  return `<div class="site">
+    <div class="supernav"><span>(800) 457-4901</span><span class="r"><span>Login / Register</span><span>My Saved Items</span><span>Cart (0)</span></span></div>
+    <div class="logo"><div class="wm">Winston</div><div class="sub">Flowers · Since 1944</div></div>
+    <nav class="dnav" aria-label="Main"><ul>${items}</ul></nav>
+    <div class="hero"><div><div class="h">Hover or tap any menu item</div><div class="s">${view==='proposed'?'Proposed navigation':'Current navigation'}</div></div></div>
+    <footer class="sfoot"><div class="fcols" style="--fc:${fc}">${cols}</div>
+    <div class="flegal"><span>© Winston Flowers</span><span>Facebook · Instagram · Pinterest</span></div></footer>
+  </div>`;
+}
+function mobile(nav,footer,view){
+  const items=nav.map((it,i)=>{
+    const t = view==='current' ? (['Home','Office'].includes(it.label)?` <span class="tag t-moved">Merges</span>`:it.label==='Blog'?` <span class="tag t-moved">Moves</span>`:it.seasonal?` <span class="tag t-rot">Rotates</span>`:'') : tag(it.s,view);
+    if(!it.cols) return `<li class="${it.seasonal?'seasonal':''}"><a href="${esc(href(it.u))}" target="_blank" rel="noopener"><span>${esc(it.label)}${t}</span></a></li>`;
+    return `<li class="${it.seasonal?'seasonal':''}"><button type="button" data-acc="${i}"><span>${esc(it.label)}${t}</span><span class="chev">+</span></button><div class="msub">${it.cols.map(c=>`${c.t&&c.t.trim()?`<h6>${esc(c.t)}${tag(c.s,view)}</h6>`:''}${c.links.map(l=>`<a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}${tag(l[2],view)}</a>`).join('')}`).join('')}</div></li>`;}).join('');
+  const f=footer.map(c=>`<details><summary><span>${esc(c.t)}${view==='current'?(['Events','Home','Office'].includes(c.t)?' <span class="tag t-moved">Merges</span>':''):tag(c.s,view)}</span><span>+</span></summary><ul>${c.links.map(l=>`<li class="${view==='current'&&l[2]==='x'?'removed':''}"><a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}</a>${tag(l[2],view)}${l[3]?`<span class="addr">${esc(l[3])}</span>`:''}</li>`).join('')}</ul></details>`).join('');
+  return `<div class="phone menu-open" id="phone">
+    <div class="mbar"><button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button><div class="mwm">Winston</div><div class="mcart">Cart</div></div>
+    <div class="mmenu"><ul>${items}</ul></div>
+    <div class="mhero">Tap the menu icon</div>
+    <div class="mfoot">${f}</div>
+  </div>`;
+}
+function render(){
+  const season=SEASONS.find(s=>s.k===state.season);
+  const nav= state.view==='proposed'?proposedNav(season):CURRENT_NAV;
+  const foot=state.view==='proposed'?proposedFooter(season):CURRENT_FOOTER;
+  document.getElementById('stage').innerHTML = state.dev==='desktop'?desktop(nav,foot,state.view):mobile(nav,foot,state.view);
+  document.getElementById('seasonCtl').style.visibility = state.view==='proposed'?'visible':'hidden';
+  document.getElementById('introText').textContent = state.view==='proposed'
+    ? 'Proposed top and footer navigation for winstonflowers.com. Hover or tap a menu to open its dropdown, and use Season to see how the first slot rotates through the year. Every link opens the live page.'
+    : 'Live navigation as of September 21, 2026, for comparison. Tags show what moves, merges or is removed in the proposal.';
+  document.getElementById('hint').textContent = state.dev==='desktop'?'Tip: switch Device to Mobile to see the phone menu. About 60% of visitors browse on a phone.':'The menu opens by default. Tap a section to expand it, and tap the menu icon to close it.';
+  // calendar
+  document.getElementById('cal').innerHTML=SEASONS.map(s=>`<tr class="${s.k===state.season?'cur':''}"><td>${esc(s.when)}</td><td><button data-season="${s.k}">${esc(s.label)}</button>${s.dd?' <span class="tag t-rot">Dropdown</span>':''}</td></tr>`).join('');
+  bind();
+}
+function bind(){
+  document.querySelectorAll('nav.dnav>ul>li').forEach(li=>{
+    const a=li.querySelector(':scope>a'); if(!li.querySelector('.dd')) return;
+    a.addEventListener('click',e=>{ if(matchMedia('(hover: none)').matches && !li.classList.contains('open')){e.preventDefault();document.querySelectorAll('nav.dnav li.open').forEach(x=>x!==li&&x.classList.remove('open'));li.classList.add('open');}});
+  });
+  const b=document.getElementById('burger'); if(b) b.onclick=()=>document.getElementById('phone').classList.toggle('menu-open');
+  document.querySelectorAll('[data-acc]').forEach(btn=>btn.onclick=()=>btn.parentElement.classList.toggle('x'));
+  document.querySelectorAll('[data-season]').forEach(btn=>btn.onclick=()=>{state.season=btn.dataset.season;document.getElementById('season').value=state.season;if(state.view!=='proposed'){state.view='proposed';syncSeg();}render();});
+}
+function syncSeg(){
+  document.querySelectorAll('#segView button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===state.view));
+  document.querySelectorAll('#segDev button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.d===state.dev));
+}
+document.getElementById('season').innerHTML=SEASONS.map(s=>`<option value="${s.k}">${esc(s.label)} (${esc(s.when)})</option>`).join('');
+document.getElementById('season').onchange=e=>{state.season=e.target.value;render();};
+document.querySelectorAll('#segView button').forEach(b=>b.onclick=()=>{state.view=b.dataset.v;syncSeg();render();});
+document.querySelectorAll('#segDev button').forEach(b=>b.onclick=()=>{state.dev=b.dataset.d;syncSeg();render();});
+document.getElementById('hl').onchange=e=>document.body.classList.toggle('hl',e.target.checked);
+document.addEventListener('click',e=>{ if(!e.target.closest('nav.dnav')) document.querySelectorAll('nav.dnav li.open').forEach(x=>x.classList.remove('open'));});
+render();
+</script>
+</body>
+</html>
