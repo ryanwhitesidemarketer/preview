@@ -79,7 +79,7 @@ nav.dnav>ul>li:hover .dd,nav.dnav>ul>li.open .dd,nav.dnav>ul>li:focus-within .dd
 .hero .h{font-family:var(--serif);font-size:30px;color:#6d655b}
 .hero .s{font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-top:8px}
 /* footer */
-footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44px 28px 26px;border-radius:0 0 6px 6px}
+footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44px 28px 40px;border-radius:0 0 6px 6px}
 .fcols{display:grid;grid-template-columns:repeat(var(--fc,5),minmax(0,1fr));gap:26px;max-width:1160px;margin:0 auto}
 .fcols h5{margin:0 0 14px;font:600 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase}
 .fcols h5 .tag{margin-left:6px}
@@ -90,7 +90,6 @@ footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44
 .fcols li .addr{display:block;font-size:12px;color:var(--mute)}
 .fcols li .tag{margin-left:6px}
 .fcols li.removed a{text-decoration:line-through;color:#a9a39b}
-.flegal{max-width:1160px;margin:30px auto 0;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--mute);flex-wrap:wrap;gap:8px}
 /* mobile frame */
 .phone{width:390px;max-width:100%;border:10px solid #1a1a1a;border-radius:38px;background:#fff;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.18)}
 .phone .mbar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:14px 12px;border-bottom:1px solid var(--line)}
@@ -122,26 +121,9 @@ footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44
 .mfoot .addr{display:block;font-size:12px;color:var(--mute)}
 .mfoot li.removed a{text-decoration:line-through;color:#a9a39b}
 .hint{text-align:center;font-size:12px;color:var(--mute);margin:14px 0 0;letter-spacing:.04em}
-/* summary */
-.summary{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.card{background:#fff;border-radius:6px;padding:24px 26px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-.card h3{font-family:var(--serif);font-weight:600;font-size:24px;margin:0 0 14px}
-.card ol{margin:0;padding-left:20px}
-.card li{margin:0 0 10px;font-size:14.5px;line-height:1.5;color:var(--ink2)}
-.card li b{color:var(--ink);font-weight:600}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.stat{border:1px solid var(--line);border-radius:5px;padding:14px 16px}
-.stat .n{font-family:var(--serif);font-size:34px;font-weight:600;line-height:1}
-.stat .d{font-size:12.5px;color:var(--ink2);margin-top:6px;line-height:1.4}
-.src{font-size:11.5px;color:var(--mute);margin-top:12px;line-height:1.5}
-.cal{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
-.cal td{padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
-.cal td:first-child{white-space:nowrap;color:var(--mute);width:40%}
-.cal tr.cur td{background:var(--rotbg)}
-.cal button{background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .foot-note{margin-top:30px;text-align:center;font-size:12px;color:var(--mute)}
 @media (max-width:960px){
-  .intro,.summary{grid-template-columns:1fr}
+  .intro{grid-template-columns:1fr}
   .legend{justify-content:flex-start}
   .fcols{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dd-inner{flex-wrap:wrap;gap:26px}
@@ -149,7 +131,6 @@ footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44
 @media (max-width:640px){
   .wrap{padding:18px 12px 40px}
   .bar{padding:12px}
-  .stats{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -176,32 +157,6 @@ footer.sfoot{background:var(--cream);border-top:1px solid var(--line);padding:44
   <div class="stage" id="stage"></div>
   <p class="hint" id="hint"></p>
 
-  <div class="summary">
-    <div class="card">
-      <h3>What changes</h3>
-      <ol>
-        <li><b>First slot rotates with the calendar.</b> The seasonal collection by default, swapped for the major holiday (Thanksgiving, Holiday, Valentine's Day, Mother's Day) during its selling window.</li>
-        <li><b>New Occasions menu</b> links all eight new occasion pages, plus Sympathy, which moves out of Flowers.</li>
-        <li><b>New Locations menu</b> puts every shop, design studio and Greater Boston delivery town in the main navigation, and its image tile promotes Same-Day Delivery.</li>
-        <li><b>Every image tile becomes a link.</b> Each dropdown keeps an image tile, as it does today, now with a short caption that links to a page. Occasions and Locations get new tiles made from Winston's own photography.</li>
-        <li><b>Home and Office merge</b> into one Home &amp; Office menu, so the bar stays at nine items.</li>
-        <li><b>Fewer, stronger links.</b> Duplicates come out (Garden Design appeared in three menus, and Events links were repeated under Home and Office), and low-traffic pages such as Blog, Careers and Donations move to the footer. Outside the new Locations menu, the dropdowns carry fewer links than they do today.</li>
-        <li><b>Footer gets simpler:</b> the 17 location links become four shops and two studios with addresses. Events, Home and Office merge into one Services column, and a Customer Care column is added.</li>
-      </ol>
-    </div>
-    <div class="card">
-      <h3>Why</h3>
-      <div class="stats">
-        <div class="stat"><div class="n">66%</div><div class="d">of non-brand Google clicks come from searches that name a city or say "near me."</div></div>
-        <div class="stat"><div class="n">0.2%</div><div class="d">of non-homepage Google clicks reach the 15 city pages, which are linked only from the footer. The /locations pages get 43%.</div></div>
-        <div class="stat"><div class="n">2% vs 16%</div><div class="d">share of page views on occasion pages: Winston vs the typical florist site with an Occasions menu.</div></div>
-        <div class="stat"><div class="n">17%</div><div class="d">of all page views go to seasonal and holiday collections, the pages the first slot promotes.</div></div>
-      </div>
-      <p class="src">Sources: Winston Flowers GA4 and Google Search Console, Sept 21, 2025 to Sept 20, 2026. Benchmarks come from anonymized GA4 and Search Console data for comparable florist sites on the same platform. Full reasoning is in the accompanying rationale document.</p>
-      <h3 style="margin-top:22px;font-size:20px">First-slot calendar</h3>
-      <table class="cal" id="cal"></table>
-    </div>
-  </div>
   <p class="foot-note">Mockup for review only. Links open the live winstonflowers.com pages. City links assume the approved v2 city pages replace the current /locations shop pages.</p>
 </div>
 
@@ -239,7 +194,7 @@ function proposedNav(season){
    {label:season.label,u:season.u,s:'r',seasonal:true,cols:season.dd||null},
    {label:'Flowers',u:'/collections/view-all',cols:[
      {t:'Collections',links:[[sc.label,sc.u,'r'],['Luxe Collection','/luxe-collection/cat5100101'],['Rose Collection','/rose-collection/cat5100126']]},
-     {t:'Shop',links:[['Subscriptions','/subscriptions'],['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Shop All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},
+     {t:'Shop',links:[['Subscriptions','/subscriptions'],['Shop All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},
      tile('flowers','Shop the '+sc.label,sc.u)
    ]},
    {label:'Occasions',u:'/all-flowers-gifts/cat6680049',s:'n',cols:[
@@ -280,7 +235,7 @@ const CURRENT_NAV=[
  {label:'Late Summer Collection',u:'/late-summer-collection/cat9080066',seasonal:true},
  {label:'Flowers',u:'/collections/view-all',cols:[
    {t:'',links:[['Late Summer Collection','/late-summer-collection/cat9080066'],['Luxe Collection','/luxe-collection/cat5100101'],['Rose Collection','/rose-collection/cat5100126']]},
-   {t:'',links:[['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472'],['Subscriptions','/subscriptions'],['Sympathy for Home','/sympathy-for-the-home/cat5100127','o'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128','o'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:TILES.flowers}]},
+   {t:'',links:[['Charity in Bloom','/flower-arrangement/charity-in-bloom/prod6490472','x'],['Subscriptions','/subscriptions'],['Sympathy for Home','/sympathy-for-the-home/cat5100127','o'],['Sympathy for the Service','/sympathy-for-the-service/cat5100128','o'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:TILES.flowers}]},
  {label:'Gourmet',u:'/collections/view-all',cols:[{t:'',links:[['Gourmet Gift Boxes','/gourmet-gift-boxes/cat7950006'],['Special Occasion Gifts','/special-occasion-gifts/cat12630195'],['All Flowers & Gifts','/all-flowers-gifts/cat6680049']]},{img:TILES.gourmet}]},
  {label:'Plants',u:'/collections/view-all',cols:[{t:'',links:[['Interior & Exterior Plants','/interior-exterior-plants/cat5130080'],['Statement Container Collection','/statement-containers/cat14660005'],['Garden Design for the Home','/garden-design/residential'],['Garden Design for the Office','/garden-design/office']]},{img:TILES.plants}]},
  {label:'Events',u:'/weddings-and-events',cols:[{t:'',links:[['Custom Weddings','/weddings-and-events/weddings'],['Private Events','/weddings-and-events/private-events'],['Corporate & Nonprofit Events','/weddings-and-events/corporate-nonprofit']]},{img:TILES.events}]},
@@ -332,12 +287,10 @@ function desktop(nav,footer,view){
     const ht = view==='current' ? (['Events','Home','Office'].includes(c.t)?` <span class="tag t-moved">Merges</span>`:'') : tag(c.s,view);
     return `<div><h5>${esc(c.t)}${ht}</h5><ul>${c.links.map(l=>{const [label,u,s,addr]=l;return `<li class="${view==='current'&&s==='x'?'removed':''}"><a href="${esc(href(u))}" target="_blank" rel="noopener">${esc(label)}</a>${tag(s,view)}${addr?`<span class="addr">${esc(addr)}</span>`:''}</li>`}).join('')}</ul></div>`}).join('');
   return `<div class="site">
-    <div class="supernav"><span>(800) 457-4901</span><span class="r"><span>Login / Register</span><span>My Saved Items</span><span>Cart (0)</span></span></div>
-    <div class="logo"><div class="wm">Winston</div><div class="sub">Flowers · Since 1944</div></div>
     <nav class="dnav" aria-label="Main"><ul>${items}</ul></nav>
     <div class="hero"><div><div class="h">Hover or tap any menu item</div><div class="s">${view==='proposed'?'Proposed navigation':'Current navigation'}</div></div></div>
     <footer class="sfoot"><div class="fcols" style="--fc:${fc}">${cols}</div>
-    <div class="flegal"><span>© Winston Flowers</span><span>Facebook · Instagram · Pinterest</span></div></footer>
+    </footer>
   </div>`;
 }
 function mobile(nav,footer,view){
@@ -347,7 +300,7 @@ function mobile(nav,footer,view){
     return `<li class="${it.seasonal?'seasonal':''}"><button type="button" data-acc="${i}"><span>${esc(it.label)}${t}</span><span class="chev">+</span></button><div class="msub">${it.cols.filter(c=>!c.img).map(c=>`${c.t&&c.t.trim()?`<h6>${esc(c.t)}${tag(c.s,view)}</h6>`:''}${c.links.map(l=>`<a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}${tag(l[2],view)}</a>`).join('')}`).join('')}</div></li>`;}).join('');
   const f=footer.map(c=>`<details><summary><span>${esc(c.t)}${view==='current'?(['Events','Home','Office'].includes(c.t)?' <span class="tag t-moved">Merges</span>':''):tag(c.s,view)}</span><span>+</span></summary><ul>${c.links.map(l=>`<li class="${view==='current'&&l[2]==='x'?'removed':''}"><a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}</a>${tag(l[2],view)}${l[3]?`<span class="addr">${esc(l[3])}</span>`:''}</li>`).join('')}</ul></details>`).join('');
   return `<div class="phone menu-open" id="phone">
-    <div class="mbar"><button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button><div class="mwm">Winston</div><div class="mcart">Cart</div></div>
+    <div class="mbar"><button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button><div class="mwm"></div><div class="mcart"></div></div>
     <div class="mmenu"><ul>${items}</ul></div>
     <div class="mhero">Tap the menu icon</div>
     <div class="mfoot">${f}</div>
@@ -363,8 +316,6 @@ function render(){
     ? 'Proposed top and footer navigation for winstonflowers.com. Hover or tap a menu to open its dropdown, and use Season to see how the first slot rotates through the year. Every link opens the live page.'
     : 'Live navigation as of September 21, 2026, for comparison. Tags show what moves, merges or is removed in the proposal.';
   document.getElementById('hint').textContent = state.dev==='desktop'?'Tip: switch Device to Mobile to see the phone menu. About 60% of visitors browse on a phone.':'The menu opens by default. Tap a section to expand it, and tap the menu icon to close it.';
-  // calendar
-  document.getElementById('cal').innerHTML=SEASONS.map(s=>`<tr class="${s.k===state.season?'cur':''}"><td>${esc(s.when)}</td><td><button data-season="${s.k}">${esc(s.label)}</button>${s.dd?' <span class="tag t-rot">Dropdown</span>':''}</td></tr>`).join('');
   bind();
 }
 function bind(){
@@ -374,7 +325,6 @@ function bind(){
   });
   const b=document.getElementById('burger'); if(b) b.onclick=()=>document.getElementById('phone').classList.toggle('menu-open');
   document.querySelectorAll('[data-acc]').forEach(btn=>btn.onclick=()=>btn.parentElement.classList.toggle('x'));
-  document.querySelectorAll('[data-season]').forEach(btn=>btn.onclick=()=>{state.season=btn.dataset.season;document.getElementById('season').value=state.season;if(state.view!=='proposed'){state.view='proposed';syncSeg();}render();});
 }
 function syncSeg(){
   document.querySelectorAll('#segView button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===state.view));
