@@ -67,6 +67,8 @@ nav.dnav>ul>li:hover .dd,nav.dnav>ul>li.open .dd,nav.dnav>ul>li:focus-within .dd
 .col a:hover{text-decoration:underline;text-underline-offset:3px}
 .col li .tag{margin-left:6px}
 .col a.feature{font-family:var(--serif);font-size:19px;font-weight:600}
+.col .subgrp{margin-top:16px}
+.col .sublbl{display:block;margin-bottom:9px;font-size:14.5px;font-weight:600;color:var(--ink)}
 .col .note{font-size:12px;color:var(--mute);margin-top:12px;max-width:220px;line-height:1.45}
 .col.imgtile{min-width:0}
 .col.imgtile img{display:block;width:230px;height:190px;object-fit:cover;border-radius:2px}
@@ -198,8 +200,8 @@ function proposedNav(season){
      tile('flowers','Shop the '+sc.label,sc.u)
    ]},
    {label:'Occasions',u:'/all-flowers-gifts/cat6680049',s:'n',cols:[
-     {t:'Celebrate',s:'n',links:[['Birthday','/birthday-flowers/cat15080013'],['Love & Romance','/love-romance/cat15080015'],['Congratulations','/congratulations-flowers/cat15130021'],['Thank You','/thank-you-flowers/cat15130020'],['Just Because','/just-because-flowers/cat15130022']]},
-     {t:'Comfort',links:[['Get Well','/get-well-flowers/cat15080014','n'],['Hospital Flower Delivery','/hospital-flower-delivery/cat15130024','n'],['Sympathy for the Home','/sympathy-for-the-home/cat5100127','m'],['Sympathy for the Service','/flowers-for-the-funeral/cat5100128','m']]},
+     {t:'',links:[['Birthday','/birthday-flowers/cat15080013','n'],['Love & Romance','/love-romance/cat15080015','n'],['Congratulations','/congratulations-flowers/cat15130021','n'],['Thank You','/thank-you-flowers/cat15130020','n']]},
+     {t:'',links:[['Just Because','/just-because-flowers/cat15130022','n'],['Get Well','/get-well-flowers/cat15080014','n'],['Hospital Flower Delivery','/hospital-flower-delivery/cat15130024','n']],sub:{t:'Sympathy',links:[['Sympathy for the Home','/sympathy-for-the-home/cat5100127','m'],['Sympathy for the Service','/flowers-for-the-funeral/cat5100128','m']]}},
      tile('occ','Shop Birthday Flowers','/birthday-flowers/cat15080013','n')
    ]},
    {label:'Gourmet',u:'/gourmet-gift-boxes/cat7950006',cols:[
@@ -280,7 +282,7 @@ function curTopTag(item){ // current-view annotations for items that go away or 
 function desktop(nav,footer,view){
   const items=nav.map(it=>{
     const t = view==='current' ? (['Home','Office'].includes(it.label)?` <span class="tag t-moved">Merges</span>`:it.label==='Blog'?` <span class="tag t-moved">Moves</span>`:it.seasonal?` <span class="tag t-rot">Rotates</span>`:'') : tag(it.s,view);
-    const dd = it.cols ? `<div class="dd"><div class="dd-inner">${it.cols.map(c=>c.img?`<div class="col imgtile">${c.u?`<a href="${esc(href(c.u))}" target="_blank" rel="noopener">`:""}<img src="${esc(c.img)}" alt="">${c.cap?`<span class="cap">${esc(c.cap)} &rsaquo;</span>`:""}${c.u?`</a>`:""}${tag(c.s,view)}</div>`:`<div class="col${c.promo?' promo':''}">${c.t?`<h4>${esc(c.t)}${tag(c.s,view)}</h4>`:''}<ul>${c.links.map(l=>linkHTML(l,view)).join('')}</ul>${c.note?`<div class="note">${esc(c.note)}</div>`:''}</div>`).join('')}</div></div>`:'';
+    const dd = it.cols ? `<div class="dd"><div class="dd-inner">${it.cols.map(c=>c.img?`<div class="col imgtile">${c.u?`<a href="${esc(href(c.u))}" target="_blank" rel="noopener">`:""}<img src="${esc(c.img)}" alt="">${c.cap?`<span class="cap">${esc(c.cap)} &rsaquo;</span>`:""}${c.u?`</a>`:""}${tag(c.s,view)}</div>`:`<div class="col${c.promo?' promo':''}">${c.t?`<h4>${esc(c.t)}${tag(c.s,view)}</h4>`:''}<ul>${c.links.map(l=>linkHTML(l,view)).join('')}</ul>${c.sub?`<div class="subgrp"><span class="sublbl">${esc(c.sub.t)}</span><ul>${c.sub.links.map(l=>linkHTML(l,view)).join('')}</ul></div>`:''}${c.note?`<div class="note">${esc(c.note)}</div>`:''}</div>`).join('')}</div></div>`:'';
     return `<li class="${it.seasonal?'seasonal':''}"><a href="${esc(href(it.u))}" target="_blank" rel="noopener" ${it.cols?'aria-haspopup="true"':''}>${esc(it.label)}${t}</a>${dd}</li>`;}).join('');
   const fc=footer.length;
   const cols=footer.map(c=>{
@@ -297,7 +299,7 @@ function mobile(nav,footer,view){
   const items=nav.map((it,i)=>{
     const t = view==='current' ? (['Home','Office'].includes(it.label)?` <span class="tag t-moved">Merges</span>`:it.label==='Blog'?` <span class="tag t-moved">Moves</span>`:it.seasonal?` <span class="tag t-rot">Rotates</span>`:'') : tag(it.s,view);
     if(!it.cols) return `<li class="${it.seasonal?'seasonal':''}"><a href="${esc(href(it.u))}" target="_blank" rel="noopener"><span>${esc(it.label)}${t}</span></a></li>`;
-    return `<li class="${it.seasonal?'seasonal':''}"><button type="button" data-acc="${i}"><span>${esc(it.label)}${t}</span><span class="chev">+</span></button><div class="msub">${it.cols.filter(c=>!c.img).map(c=>`${c.t&&c.t.trim()?`<h6>${esc(c.t)}${tag(c.s,view)}</h6>`:''}${c.links.map(l=>`<a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}${tag(l[2],view)}</a>`).join('')}`).join('')}</div></li>`;}).join('');
+    return `<li class="${it.seasonal?'seasonal':''}"><button type="button" data-acc="${i}"><span>${esc(it.label)}${t}</span><span class="chev">+</span></button><div class="msub">${it.cols.filter(c=>!c.img).map(c=>`${c.t&&c.t.trim()?`<h6>${esc(c.t)}${tag(c.s,view)}</h6>`:''}${c.links.map(l=>`<a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}${tag(l[2],view)}</a>`).join('')}${c.sub?`<h6>${esc(c.sub.t)}</h6>`+c.sub.links.map(l=>`<a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}${tag(l[2],view)}</a>`).join(''):''}`).join('')}</div></li>`;}).join('');
   const f=footer.map(c=>`<details><summary><span>${esc(c.t)}${view==='current'?(['Events','Home','Office'].includes(c.t)?' <span class="tag t-moved">Merges</span>':''):tag(c.s,view)}</span><span>+</span></summary><ul>${c.links.map(l=>`<li class="${view==='current'&&l[2]==='x'?'removed':''}"><a href="${esc(href(l[1]))}" target="_blank" rel="noopener">${esc(l[0])}</a>${tag(l[2],view)}${l[3]?`<span class="addr">${esc(l[3])}</span>`:''}</li>`).join('')}</ul></details>`).join('');
   return `<div class="phone menu-open" id="phone">
     <div class="mbar"><button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button><div class="mwm"></div><div class="mcart"></div></div>
