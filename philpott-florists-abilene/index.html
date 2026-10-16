@@ -46,7 +46,9 @@ body{font-family:Barlow,sans-serif;color:#000;background:#fff;-webkit-text-size-
 .pff-btn-ghost:hover{background:var(--pff-mist)}
 .pff-section{margin:56px 0 0}
 .pff-cards{display:flex;flex-wrap:wrap;gap:20px}
-.pff-card{flex:1 1 260px;background:var(--pff-mist);border-top:4px solid var(--pff-green);border-radius:6px;padding:24px 22px}
+.pff-card{flex:1 1 260px;background:var(--pff-mist);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.pff-card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-bottom:4px solid var(--pff-green)}
+.pff-card-body{padding:20px 22px 24px}
 .pff-card p{font-size:16px;margin:0}
 .pff-local{display:flex;flex-wrap:wrap;gap:28px}
 .pff-local-copy{flex:1 1 440px}
@@ -132,9 +134,9 @@ body{font-family:Barlow,sans-serif;color:#000;background:#fff;-webkit-text-size-
 <section class="pff-section">
 <h2>Why Abilene Orders From Philpott</h2>
 <div class="pff-cards">
-<div class="pff-card"><h3>Abilene's Florist Since 1920</h3><p>Mr. and Mrs. W.A. Philpott opened our shop more than a century ago. Generations of Abilene families have trusted us with their birthdays, anniversaries, weddings and goodbyes.</p></div>
-<div class="pff-card"><h3>Designed by Our Local Team</h3><p>Every arrangement is made by our own floral designers at 1902 N. First Street. When you call, you talk to people who know Abilene and will help you choose just the right flowers.</p></div>
-<div class="pff-card"><h3>Same-Day Delivery When You Need It</h3><p>Order early in the day and same-day delivery is often available across Abilene. If timing matters, call us at 325-672-7891 and we will tell you what we can do.</p></div>
+<div class="pff-card"><img src="img/philpott-abilene-flower-shop.jpg" alt="Inside Philpott Florists and Greenhouses on N. First Street in Abilene" width="900" height="600"><div class="pff-card-body"><h3>Abilene's Florist Since 1920</h3><p>Mr. and Mrs. W.A. Philpott opened our shop more than a century ago. Generations of Abilene families have trusted us with their birthdays, anniversaries, weddings and goodbyes.</p></div></div>
+<div class="pff-card"><img src="img/philpott-designer-at-work.jpg" alt="A Philpott floral designer arranging a potted bouquet" width="800" height="600"><div class="pff-card-body"><h3>Designed by Our Local Team</h3><p>Every arrangement is made by our own floral designers at 1902 N. First Street. When you call, you talk to people who know Abilene and will help you choose just the right flowers.</p></div></div>
+<div class="pff-card"><img src="img/philpott-fresh-flowers.jpg" alt="Fresh flowers and plants ready in the Philpott shop" width="800" height="600"><div class="pff-card-body"><h3>Same-Day Delivery When You Need It</h3><p>Order early in the day and same-day delivery is often available across Abilene. If timing matters, call us at 325-672-7891 and we will tell you what we can do.</p></div></div>
 </div>
 </section>
 
